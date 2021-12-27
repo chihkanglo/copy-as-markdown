@@ -2,7 +2,7 @@
 	"name": "Copy as Markdown",
 	"version": "0.0.0",
 	"description": "Browser extension to copy hyperlinks, images, and selected text as Markdown",
-	"homepage_url": "https://github.com/notlmn/copy-as-markdown",
+	"homepage_url": "https://github.com/chihkanglo/copy-as-markdown",
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
 	"applications": {

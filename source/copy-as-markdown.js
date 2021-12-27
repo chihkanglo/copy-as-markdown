@@ -37,7 +37,7 @@ turndownService.addRule('listItem', {
 // Action listener to redirect user to source repo
 browser.browserAction.onClicked.addListener(() => {
 	browser.tabs.create({
-		url: 'https://github.com/notlmn/copy-as-markdown'
+		url: 'https://github.com/chihkanglo/copy-as-markdown'
 	});
 });
 
