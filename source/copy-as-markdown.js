@@ -54,6 +54,7 @@ for (const context of contexts) {
 // Listener for events from context menus
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
 	const text = info.linkText;
+	const selectedText = info.selectionText;
 	const assetUrl = encodeURI(info.srcUrl);
 	const linkUrl = encodeURI(info.linkUrl);
 
@@ -62,7 +63,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 	if (info.menuItemId.endsWith('image')) {
 		htmlContent = `<img alt="${text || assetUrl}" src="${assetUrl}" />`;
 	} else if (info.menuItemId.endsWith('link')) {
-		htmlContent = `<a href="${linkUrl}">${text || linkUrl}</a>`;
+		htmlContent = `<a href="${linkUrl}">${text || selectedText}</a>`;
 	} else if (info.menuItemId.endsWith('selection')) {
 		const completionData = await browser.tabs.executeScript(tab.id, {
 			frameId: info.frameId,
