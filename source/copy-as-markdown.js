@@ -42,39 +42,19 @@ browser.browserAction.onClicked.addListener(() => {
 });
 
 // Add context menus for specific actions
-const contexts = ['image', 'link', 'selection'];
-for (const context of contexts) {
 	browser.contextMenus.create({
-		id: `cpy-as-md:${context}`,
-		title: `Copy ${context} as Markdown`,
-		contexts: [context]
+  id: `cpy-as-md:link`,
+  title: `Copy link as Markdown`,
+  contexts: ['link']
 	});
-}
 
 // Listener for events from context menus
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
 	const text = info.linkText;
 	const selectedText = info.selectionText;
-	const assetUrl = encodeURI(info.srcUrl);
 	const linkUrl = encodeURI(info.linkUrl);
-
-	let htmlContent = '';
-
-	if (info.menuItemId.endsWith('image')) {
-		htmlContent = `<img alt="${text || assetUrl}" src="${assetUrl}" />`;
-	} else if (info.menuItemId.endsWith('link')) {
-		htmlContent = `<a href="${linkUrl}">${text || selectedText}</a>`;
-	} else if (info.menuItemId.endsWith('selection')) {
-		const completionData = await browser.tabs.executeScript(tab.id, {
-			frameId: info.frameId,
-			code: __INJECTIBLE_CODE__ // Replaced by webpack with actual code
-		});
-
-		htmlContent = completionData[0] || '';
-	}
-
+  const htmlContent = `<a href="${linkUrl}">${text || selectedText}</a>`;
 	const markdownData = turndownService.turndown(htmlContent);
-
 	const inputElement = document.createElement('textarea');
 	document.body.append(inputElement);
 	inputElement.value = markdownData;
